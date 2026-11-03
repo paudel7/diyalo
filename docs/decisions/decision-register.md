@@ -1,0 +1,57 @@
+# DIYALO Decision Register
+
+Created in Stage 0. Source: roadmap v1.0, section 16, plus items raised during repository and specification review.
+
+Status values: **Open**, **Assumed** (working assumption, reversible), **Decided** (owner decision), **Confirmed** (signed off by the named adviser or authority).
+"Blocks" shows the first stage that cannot safely complete without the decision.
+
+## A. External and legal decisions (owner and advisers)
+
+| ID   | Decision                                                                                                            | Owner                                           | Blocks                              | Blocking? | Status | Interim handling in code and copy                                                               |
+| ---- | ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | ----------------------------------- | --------- | ------ | ----------------------------------------------------------------------------------------------- |
+| D-01 | Legal receiving entity and Nepal partner agreement (who solicits, receives, controls funds, issues acknowledgments) | Founder + Nepal legal/NGO adviser               | Stage 4 public copy; Stage 8 launch | Yes       | Open   | Entity name and legal wording are `TBD` config placeholders. No legal claims.                   |
+| D-02 | Foreign donation, Social Welfare Council and local approvals                                                        | Nepal partner + legal adviser                   | Stage 8 launch                      | Yes       | Open   | Tracked only. Nothing implies approval.                                                         |
+| D-03 | Canadian fundraising and receipt model                                                                              | Canadian charity, legal and accounting advisers | Stage 5 donor-facing wording        | Yes       | Open   | UI says "confirmation". Never "tax receipt" or "tax-deductible".                                |
+| D-04 | Payment provider and merchant country                                                                               | Founder + provider                              | Stage 5                             | Yes       | Open   | No provider chosen. No code against an assumed provider. See `payment-provider-feasibility.md`. |
+| D-05 | Accounting framework and restricted-contribution policy                                                             | Receiving entity accountant                     | Stage 6                             | Yes       | Open   | Accounting event matrix presented for review before ledger code.                                |
+| D-06 | Approval limits and signatories                                                                                     | Board / authorized officers                     | Stage 6                             | Yes       | Open   | Limits are configurable; no defaults assumed.                                                   |
+| D-07 | Case eligibility and prioritization policy                                                                          | Program lead + partner                          | Stage 3                             | Yes       | Open   | Rubric (roadmap 5.3) is illustrative only; configurable and advisory.                           |
+| D-08 | Consent, retention and safeguarding policies                                                                        | Safeguarding/privacy lead                       | Stage 3; real data load             | Yes       | Open   | See `safeguarding-privacy-checklist.md`. Fictional data only.                                   |
+| D-09 | Pilot cohort and launch geography                                                                                   | Founder + partner                               | Stage 8                             | Yes       | Open   | Tracked only.                                                                                   |
+| D-10 | Brand, domain, organization-name and trademark availability                                                         | Founder                                         | Stage 8 launch                      | Yes       | Open   | Tracked only.                                                                                   |
+
+## B. Currency decisions
+
+| ID   | Decision                                                               | Owner                            | Blocks                                  | Blocking?           | Status                                                                                     | Notes                                                                                                               |
+| ---- | ---------------------------------------------------------------------- | -------------------------------- | --------------------------------------- | ------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| D-11 | Accounting base currency                                               | Finance lead / accountant        | Stage 2 money utilities; Stage 6 ledger | Yes until confirmed | **Decided: USD, convertible to NPR** (owner, 2026-11-03). Accountant confirmation pending. | Base currency is a config value, not hard-coded. Every amount carries an ISO currency code.                         |
+| D-12 | FX policy: rate source, rate timing, realized and unrealized treatment | Finance lead / accountant        | Stage 6                                 | No until Stage 6    | Open                                                                                       | Store source, rate, rate date and base amount per roadmap 69.                                                       |
+| D-13 | Enabled display and payment currencies                                 | Founder + gateway + legal entity | Stage 5                                 | No until Stage 5    | Open                                                                                       | Roadmap initial target CAD, USD, EUR, NPR. Payment currencies enabled only where gateway and entity allow (PUB-09). |
+
+## C. Technical decisions
+
+| ID   | Decision                                                          | Owner               | Blocks       | Blocking?        | Status                                                                         | Notes                                                                        |
+| ---- | ----------------------------------------------------------------- | ------------------- | ------------ | ---------------- | ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| D-14 | Authentication provider (Appwrite Auth vs managed OIDC vs in-app) | Tech lead           | Stage 2      | No for Stage 0   | Open                                                                           | Choice affects user and role data model. Security review first (roadmap 10). |
+| D-15 | ORM: Prisma vs Drizzle                                            | Tech lead           | Stage 2      | No for Stage 0   | Open                                                                           | Decide in Stage 2 schema proposal.                                           |
+| D-16 | Hosting, object storage, email and monitoring providers           | Tech lead           | Stage 2 to 5 | No for Stage 0   | Open                                                                           | Environments plan in `environments.md`.                                      |
+| D-17 | Package manager                                                   | Tech lead           | Stage 0      | No               | **Assumed: pnpm**                                                              | Greenfield repo.                                                             |
+| D-18 | Branching model                                                   | Tech lead           | Stage 0      | No               | **Assumed: trunk-based**, protected `main`, short-lived branches, PRs required |                                                                              |
+| D-19 | CI                                                                | Tech lead           | Stage 0      | No               | **Assumed: GitHub Actions**                                                    |                                                                              |
+| D-20 | Issue tracker                                                     | Founder             | Stage 0      | No               | **Assumed: GitHub Issues**                                                     | Milestones mirror stages.                                                    |
+| D-21 | Backup RPO and RTO targets                                        | Founder + tech lead | Stage 8      | No until Stage 8 | Open                                                                           | Must be agreed before pilot.                                                 |
+
+## D. Specification issues found in review
+
+| ID   | Issue                                                                                                                        | Proposed handling                                                                            | Status                    |
+| ---- | ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------- |
+| S-01 | Section 6.1 puts basic program sponsorship in MVP; section 2 MVP list does not mention it.                                   | Treat as in MVP per 6.1. Sponsor a program or need, never ownership of or access to a child. | Assumed; owner to confirm |
+| S-02 | Case-specific donation terms (surplus, shortfall, ineligibility, changed need) are required by 6.1 and PUB-08 but undefined. | Policy decision needed before Stage 4 copy and Stage 5 checkout.                             | Open (blocks Stage 4)     |
+| S-03 | Applications are in NPR; donors give in other currencies.                                                                    | Covered by D-11 to D-13.                                                                     | Open                      |
+| S-04 | Roadmap implementation steps are numbered continuously across stages (22 to 115) in the document.                            | Cosmetic. Reference stages by name, not step number.                                         | Noted                     |
+
+## E. Change log
+
+| Date       | Change                                                                  | By               |
+| ---------- | ----------------------------------------------------------------------- | ---------------- |
+| 2026-11-03 | Register created. D-11 recorded as USD per owner. D-17 to D-20 assumed. | Claude (Stage 0) |
