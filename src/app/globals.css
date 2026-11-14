@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+/*
+ * DIYALO design tokens (Stage 1).
+ * Direction: a clay oil lamp (diyalo) at dusk in the Himalaya. Cool "Himal" ink for night,
+ * marigold flame used only as a fill (never as text on light surfaces), cool snow for pages.
+ * Contrast pairs used in components are listed in docs/ux/design-system.md and checked in the
+ * accessibility audit.
+ */
+@theme {
+  --color-ink: #0f2a43;
+  --color-ink-deep: #091b2d;
+  --color-ink-soft: #1d3d5c;
+  --color-night-text: #bccbd9;
+
+  --color-flame: #f5a623;
+  --color-flame-hover: #ffb938;
+  --color-flame-tint: #fff1d6;
+  --color-flame-deep: #8a5200;
+
+  --color-snow: #f6f8fa;
+  --color-paper: #ffffff;
+  --color-mist: #dfe6ec;
+  --color-slate: #44566a;
+
+  --color-moss: #2b6a58;
+  --color-moss-tint: #e3f2ec;
+  --color-rhodo: #a82b4a;
+  --color-rhodo-tint: #fbe9ee;
+  --color-sky-tint: #e1ecf6;
+
+  --font-display: "Literata Variable", "Mukta", Georgia, serif;
+  --font-sans: "Mukta", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --breakpoint-xs: 30rem;
+}
+
+:root {
+  --focus-color: var(--color-ink);
+}
+
+/* Dark surfaces switch the keyboard focus ring to the flame colour. */
+.surface-dark {
+  --focus-color: var(--color-flame);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-snow);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--focus-color);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--color-flame);
+    color: var(--color-ink);
+  }
+}
+
+@layer components {
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -4rem;
+    z-index: 100;
+    background: var(--color-flame);
+    color: var(--color-ink);
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  /* Long-form text used by policy and explainer pages. Line length capped for readability. */
+  .prose-diyalo {
+    max-width: 68ch;
+  }
+
+  .prose-diyalo > * + * {
+    margin-top: 1rem;
+  }
+
+  .prose-diyalo h2 {
+    font-size: 1.625rem;
+    margin-top: 2.25rem;
+  }
+
+  .prose-diyalo h3 {
+    font-size: 1.25rem;
+    margin-top: 1.75rem;
+  }
+
+  .prose-diyalo ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+
+  .prose-diyalo li + li {
+    margin-top: 0.375rem;
+  }
+
+  .prose-diyalo a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 600;
+  }
+}
+
+/* The one decorative motion on the site: the lamp flame. Disabled for reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @keyframes flame-flicker {
+    0%,
+    100% {
+      transform: scale(1, 1) rotate(0deg);
+    }
+    18% {
+      transform: scale(0.97, 1.04) rotate(-1.2deg);
+    }
+    37% {
+      transform: scale(1.02, 0.97) rotate(0.8deg);
+    }
+    61% {
+      transform: scale(0.98, 1.03) rotate(-0.6deg);
+    }
+    82% {
+      transform: scale(1.01, 0.98) rotate(1deg);
+    }
+  }
+
+  @keyframes glow-breathe {
+    0%,
+    100% {
+      opacity: 0.9;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .lamp-flame {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: flame-flicker 3.6s ease-in-out infinite;
+  }
+
+  .lamp-glow {
+    animation: glow-breathe 5s ease-in-out infinite;
+  }
+}

@@ -4,7 +4,7 @@ _Lighting the Path to a Brighter Future._
 
 A transparent, case-based giving platform connecting donors worldwide with verified children and families in Nepal.
 
-**Current stage: Stage 0 (product decisions, legal readiness, repository setup).** No product features exist yet. The source of truth is _DIYALO Complete Website Requirements & Development Roadmap v1.0_ (3 November 2026). The roadmap is not committed to this repo; keep the canonical copy in your project files.
+**Current stage: Stage 1 (UX, information architecture and design system).** The site is a clickable design prototype with fictional content: no database, no sign-in, no payments. `/admin` is open because it shows only fictional data, so never deploy this build publicly. The source of truth is _DIYALO Complete Website Requirements & Development Roadmap v1.0_ (3 November 2026). The roadmap is not committed to this repo; keep the canonical copy in your project files.
 
 > Nothing in this repository states a legal entity, partner approval, tax-receipt eligibility or payment-provider eligibility as fact. See `docs/decisions/decision-register.md`.
 
