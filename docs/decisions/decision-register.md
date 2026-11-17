@@ -41,6 +41,10 @@ Status values: **Open**, **Assumed** (working assumption, reversible), **Decided
 | D-20 | Issue tracker                                                     | Founder             | Stage 0      | No               | **Assumed: GitHub Issues**                                                     | Milestones mirror stages.                                                    |
 | D-21 | Backup RPO and RTO targets                                        | Founder + tech lead | Stage 8      | No until Stage 8 | Open                                                                           | Must be agreed before pilot.                                                 |
 
+| D-22 | Who approves cases: delegated approval authority for a second Case manager vs a separate role | Founder | Stage 3 | No for Stage 2 | **Proposed:** delegated authority with limits (`approval_authorities`) | Matches roadmap wording "unless separately authorized" and D-06. |
+| D-23 | Safeguarding officer role for restricted records | Founder + safeguarding lead | Stage 3 | No for Stage 2 | **Proposed:** role exists with no members until the lead is named | Ties to D-08. |
+| D-24 | MFA scope | Founder | Stage 2 | No | **Proposed:** required for every staff role in staging and production | Staff can see child data. |
+
 ## D. Specification issues found in review
 
 | ID   | Issue                                                                                                                        | Proposed handling                                                                            | Status                    |
