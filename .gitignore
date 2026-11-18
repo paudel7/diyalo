@@ -25,3 +25,6 @@ npm-debug.log*
 # editors
 .idea/
 .vscode/
+
+# Stage 2
+.dev-outbox/

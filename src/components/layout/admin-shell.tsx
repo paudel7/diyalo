@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { Wordmark } from "@/components/brand/lamp";
-import { adminNav } from "@/lib/navigation";
+import type { AdminNavItem } from "@/lib/navigation";
 import { cn } from "@/lib/cn";
 
 function isActive(pathname: string, href: string) {
@@ -12,16 +12,28 @@ function isActive(pathname: string, href: string) {
 }
 
 /**
- * Admin frame: dark side navigation on desktop, collapsible menu on phones. There is no
- * sign-in in Stage 1; authentication and role checks arrive in Stage 2.
+ * Admin frame: dark side navigation on desktop, collapsible menu on phones. The navigation is
+ * filtered by the signed-in user's permissions for convenience; it is not a security control.
  */
-export function AdminShell({ children }: { children: ReactNode }) {
+export function AdminShell({
+  children,
+  nav: navItems,
+  userName,
+  roleNames,
+  signOutAction,
+}: {
+  children: ReactNode;
+  nav: AdminNavItem[];
+  userName: string;
+  roleNames: string[];
+  signOutAction: () => Promise<void>;
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   const nav = (
     <ul className="space-y-1">
-      {adminNav.map((item) => {
+      {navItems.map((item) => {
         const active = isActive(pathname, item.href);
         return (
           <li key={item.href}>
@@ -73,10 +85,25 @@ export function AdminShell({ children }: { children: ReactNode }) {
           className="flex flex-wrap items-center justify-between gap-3 border-b border-mist bg-paper px-4 py-3 sm:px-8"
         >
           <p className="text-base text-slate">
-            Signed in as <span className="font-semibold text-ink">Prototype user</span> (no sign-in
-            yet)
+            Signed in as <span className="font-semibold text-ink">{userName}</span>
+            {roleNames.length > 0 ? ` (${roleNames.join(", ")})` : " (no roles assigned)"}
           </p>
-          <p className="text-sm font-semibold text-slate">Role views are added in Stage 2</p>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/admin/account"
+              className="text-base font-semibold underline underline-offset-4"
+            >
+              Account
+            </Link>
+            <form action={signOutAction}>
+              <button
+                type="submit"
+                className="min-h-10 rounded-lg border-2 border-ink px-4 text-base font-semibold hover:bg-ink hover:text-snow"
+              >
+                Sign out
+              </button>
+            </form>
+          </div>
         </section>
         <div className="px-4 py-8 sm:px-8">{children}</div>
       </div>

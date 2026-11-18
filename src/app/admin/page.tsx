@@ -110,7 +110,7 @@ export default function AdminDashboard() {
           </h2>
           <Alert title="Restricted view">
             Safeguarding records are visible only to people with that role. Counts and details
-            appear here for them in Stage 2.{" "}
+            appear here for them once safeguarding workflows are built (Stage 3).{" "}
             <StatusBadge tone="neutral">No role assigned</StatusBadge>
           </Alert>
         </section>

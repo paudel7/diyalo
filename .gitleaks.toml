@@ -1,0 +1,4 @@
+# Test fixtures and local-development examples use obviously fake values.
+[allowlist]
+description = "Fictional fixtures"
+paths = ['''\.env\.example$''', '''tests/integration/env-setup\.ts$''', '''\.github/workflows/ci\.yml$''']

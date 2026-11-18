@@ -4,19 +4,19 @@ _Lighting the Path to a Brighter Future._
 
 A transparent, case-based giving platform connecting donors worldwide with verified children and families in Nepal.
 
-**Current stage: Stage 1 (UX, information architecture and design system).** The site is a clickable design prototype with fictional content: no database, no sign-in, no payments. `/admin` is open because it shows only fictional data, so never deploy this build publicly. The source of truth is _DIYALO Complete Website Requirements & Development Roadmap v1.0_ (3 November 2026). The roadmap is not committed to this repo; keep the canonical copy in your project files.
+**Current stage: Stage 2 (foundation, database, authentication), awaiting owner review.** The public site and admin screens still show fictional content. Staff sign-in, roles, MFA and the audit log are real and backed by PostgreSQL; there are no payments. See `docs/stage-2/exit-report.md` and `docs/runbooks/stage-2-local-setup.md`. Do not deploy publicly until Stage 8. The source of truth is _DIYALO Complete Website Requirements & Development Roadmap v1.0_ (3 November 2026). The roadmap is not committed to this repo; keep the canonical copy in your project files.
 
 > Nothing in this repository states a legal entity, partner approval, tax-receipt eligibility or payment-provider eligibility as fact. See `docs/decisions/decision-register.md`.
 
 ## Quick start
 
-| Step         | Command                                                         |
-| ------------ | --------------------------------------------------------------- |
-| Requirements | Node 22 (`.nvmrc`), pnpm 10 (`corepack enable`)                 |
-| Install      | `pnpm install`                                                  |
-| Configure    | `cp .env.example .env.local` (no secrets are needed in Stage 0) |
-| Run          | `pnpm dev` then open http://localhost:3000                      |
-| All checks   | `pnpm check`                                                    |
+| Step         | Command                                                                                                            |
+| ------------ | ------------------------------------------------------------------------------------------------------------------ |
+| Requirements | Node 22 (`.nvmrc`), pnpm 10 (`corepack enable`)                                                                    |
+| Install      | `pnpm install`                                                                                                     |
+| Configure    | `cp .env.example .env.local`, then follow `docs/runbooks/stage-2-local-setup.md` (database and two generated keys) |
+| Run          | `pnpm dev` then open http://localhost:3000                                                                         |
+| All checks   | `pnpm check`                                                                                                       |
 
 ## Scripts
 
@@ -37,6 +37,9 @@ A transparent, case-based giving platform connecting donors worldwide with verif
 | `src/lib/config/`                       | Organization and currency configuration (placeholders until decisions are confirmed) |
 | `tests/unit/`                           | Unit tests, including the Stage 0 "no unverified claims" guard                       |
 | `docs/`                                 | Product brief, decision register, checklists, environments plan, backlog             |
+| `db/`                                   | Drizzle schema, SQL migrations, reference-data sync, role bootstrap (Stage 2)        |
+| `src/server/`                           | Services, policies, repositories, audit, sessions (never imported by UI code)        |
+| `scripts/`                              | `db:migrate`, `db:reset`, `db:seed`                                                  |
 | `docs/decisions/`                       | Decision register and Stage 0 checklists                                             |
 | `docs/runbooks/`, `docs/test-evidence/` | Reserved for later stages                                                            |
 | `.github/workflows/ci.yml`              | CI: format, lint, type-check, test, build                                            |

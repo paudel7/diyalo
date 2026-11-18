@@ -1,7 +1,14 @@
+import type { PermissionCode } from "@/lib/permissions/matrix";
+
 /** Public and admin navigation. Labels follow roadmap section 4.1 and 8.1 exactly. */
 export interface NavItem {
   label: string;
   href: string;
+}
+
+/** An admin item is shown when the user holds any of these permissions. Display only: every page and action re-checks on the server. */
+export interface AdminNavItem extends NavItem {
+  anyOf?: PermissionCode[];
 }
 
 export const primaryNav: NavItem[] = [
@@ -58,16 +65,20 @@ export const footerGroups: Array<{ title: string; items: NavItem[] }> = [
 ];
 
 /** Admin modules, roadmap section 8.1. */
-export const adminNav: NavItem[] = [
+export const adminNav: AdminNavItem[] = [
   { label: "Dashboard", href: "/admin" },
-  { label: "Applications", href: "/admin/applications" },
-  { label: "Cases", href: "/admin/cases" },
-  { label: "Campaigns", href: "/admin/campaigns" },
-  { label: "Donations", href: "/admin/donations" },
-  { label: "Funds", href: "/admin/funds" },
-  { label: "Disbursements", href: "/admin/disbursements" },
-  { label: "Accounting", href: "/admin/accounting" },
-  { label: "Reports", href: "/admin/reports" },
-  { label: "Documents", href: "/admin/documents" },
-  { label: "Settings", href: "/admin/settings" },
+  { label: "Applications", href: "/admin/applications", anyOf: ["application.read"] },
+  { label: "Cases", href: "/admin/cases", anyOf: ["case.read"] },
+  { label: "Campaigns", href: "/admin/campaigns", anyOf: ["settings.manage"] },
+  { label: "Donations", href: "/admin/donations", anyOf: ["donation.read"] },
+  { label: "Funds", href: "/admin/funds", anyOf: ["fund.classify"] },
+  {
+    label: "Disbursements",
+    href: "/admin/disbursements",
+    anyOf: ["disbursement.request", "disbursement.approve"],
+  },
+  { label: "Accounting", href: "/admin/accounting", anyOf: ["journal.prepare", "journal.post"] },
+  { label: "Reports", href: "/admin/reports", anyOf: ["report.view"] },
+  { label: "Documents", href: "/admin/documents", anyOf: ["document.read"] },
+  { label: "Settings", href: "/admin/settings", anyOf: ["user.manage", "audit.read"] },
 ];
